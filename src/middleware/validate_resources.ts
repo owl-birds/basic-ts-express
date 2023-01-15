@@ -12,6 +12,7 @@ const validate =
         query: request.query,
         params: request.params,
       });
+      next();
     } catch (error: any) {
       return response.status(400).send(error.errors);
     }

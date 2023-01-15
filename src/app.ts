@@ -14,6 +14,11 @@ const port = config.get<number>("port");
 //
 const app: Express = express();
 
+// middleware
+
+// body parser NEEDED
+app.use(express.json());
+
 app.listen(port, async () => {
   //   console.log("app listening to port", port);
   // console.log(config.get<string>("db_uri"));
