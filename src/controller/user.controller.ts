@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { omit } from "lodash";
+// import { omit } from "lodash";
 // Models
-import User from "../model/user.model";
+// import User from "../model/user.model";
 // utils
 import log from "../utils/logger";
 // services
@@ -21,8 +21,8 @@ export const create_user_handler = async (
       createdAt: user.createdAt,
       id: user._id,
     };
-    return response.status(201).send(omit(user.toJSON(), "password"));
-    // return response.send(user);
+    // return response.status(201).send(omit(user.toJSON(), "password"));
+    return response.status(201).send(user);
     // return response.send(filtered_user);
   } catch (error: any) {
     log.error(error);

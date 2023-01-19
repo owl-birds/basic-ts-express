@@ -3,6 +3,9 @@ import express, { Express } from "express";
 import config from "config";
 import routes from "./routes";
 
+// middleware
+import { deserialize_user } from "./middleware/deserialize_user";
+
 // utils
 import {
   // connect,
@@ -18,6 +21,7 @@ const app: Express = express();
 
 // body parser NEEDED
 app.use(express.json());
+app.use(deserialize_user); // will be called for every enpoind of every requesrt
 
 app.listen(port, async () => {
   //   console.log("app listening to port", port);
