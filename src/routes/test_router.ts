@@ -24,7 +24,7 @@ router.get("/", (request: Request, response: Response) => {
 });
 router.get("/api/user/session", require_user, get_user_session_handler);
 
-// POST
+//POST
 router.post("/api/user", validate(create_user_schema), create_user_handler);
 router.post(
   "/api/user/session",

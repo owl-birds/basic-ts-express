@@ -8,8 +8,9 @@ export const deserialize_user = (
 ) => {
   //
   // use loadash use for safer, cause we donw know if the property is exist or not
+  // console.log(get(request, "headers.authorization", ""));
   const access_token = get(request, "headers.authorization", "").replace(
-    /^Bearer/,
+    /^Bearer\s/,
     ""
   );
   if (!access_token) {
@@ -17,10 +18,11 @@ export const deserialize_user = (
   }
   // verfy acces token
   const { decoded, expired } = verify_jwt(access_token);
-  //   console.log(decoded);
-  //   console.log(access_token);
-  //   console.log(expired);
-  console.log(verify_jwt(access_token));
+  // console.log("deserialize_user");
+  // console.log("deserialize_user",decoded);
+  // console.log(access_token);
+  // console.log(expired);
+  // console.log(verify_jwt(access_token));
   if (decoded) {
     response.locals.user = decoded;
     return next();

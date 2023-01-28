@@ -15,6 +15,27 @@ yarn add express zod config cors express mongoose pino pino-pretty dayjs bcrypt 
 
 yarn add @types/body-parser @types/config @types/cors @types/express @types/node @types/pino @types/bcrypt @types/jsonwebtoken @types/lodash @types/nanoid ts-node-dev typescript -D
 
+# Authentocation adn Authorization
+read:
+https://auth0.com/blog/refresh-tokens-what-are-they-and-when-to-use-them/ 
+- Token
+   are pieces of data that carry just enough information to facilitate the 
+   process of determining a user's identity or authorizing a user to perform 
+   an action
+    
+   token example 
+   - id token : an artifact that client applications can use to consume the 
+   identity of a user. for ex: name, email, profile pict etc.
+   - access token (bearer token) : The access token then acts as a 
+   credential artifact to access protected resources rather than an 
+   identification artifact. Malicious users could theoretically 
+   compromise a system and steal access tokens, which in turn they 
+   could use to access protected resources by presenting those tokens 
+   directly to the server.
+   - refresh token : The client application can get a new access token as long as the refresh token is valid and unexpired.
+    
+![](./diagrams/rt-and-at.png)
+
 # USING CURL
 
 cant use it on wsl2 yet
