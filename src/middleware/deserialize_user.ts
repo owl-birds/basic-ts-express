@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { get } from "lodash";
+import { re_issue_access_token } from "../service/session.service";
 import { verify_jwt } from "../utils/jwt.utils";
-export const deserialize_user = (
+export const deserialize_user = async (
   request: Request,
   response: Response,
   next: NextFunction
@@ -23,9 +24,25 @@ export const deserialize_user = (
   // console.log(access_token);
   // console.log(expired);
   // console.log(verify_jwt(access_token));
+  
+  // valid acces token : can be decoded 
   if (decoded) {
     response.locals.user = decoded;
     return next();
+  }
+  
+  // if access  token is not valid anymore:: issuing a new acces token
+  const refresh_token = get(request, "headers.x-refresh");
+  console.log("deserialize_user, refresh_token:",refresh_token);
+ 
+  if (expired && refresh_token){
+    const new_acces_token = await re_issue_access_token(refresh_token);
+    if (new_acces_token){
+        response.setHeader("x-access-token", new_acces_token);
+        const {decoded} = verify_jwt(new_acces_token);
+        response.locals.user = decoded;
+        return next();    
+    }
   }
 
   return next();

@@ -1,5 +1,5 @@
 import { omit } from "lodash";
-import { DocumentDefinition } from "mongoose";
+import { DocumentDefinition, FilterQuery } from "mongoose";
 import User, { I_User_Document } from "../model/user.model";
 export const create_user = async (
   input: DocumentDefinition<
@@ -14,6 +14,9 @@ export const create_user = async (
     throw new Error(error);
   }
 };
+export const find_user = async (query: FilterQuery<I_User_Document>)=>{
+    return await User.findOne(query).lean();
+}
 export const validate_password = async (email: string, password: string) => {
   try {
     const user = await User.findOne({ email });

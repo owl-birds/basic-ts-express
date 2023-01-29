@@ -4,6 +4,7 @@ import { Router, Request, Response } from "express";
 import { create_user_handler } from "../controller/user.controller";
 import {
   create_user_session_handler,
+  delete_user_session_handler,
   get_user_session_handler,
 } from "../controller/session.controller";
 
@@ -24,11 +25,15 @@ router.get("/", (request: Request, response: Response) => {
 });
 router.get("/api/user/session", require_user, get_user_session_handler);
 
-//POST
+// POST
 router.post("/api/user", validate(create_user_schema), create_user_handler);
 router.post(
   "/api/user/session",
   validate(session_login_user_schema),
   create_user_session_handler
 );
+
+// DELETE
+router.delete("/api/user/session", require_user, delete_user_session_handler);
+
 export default router;

@@ -6,7 +6,7 @@ import Session from "../model/session.model";
 // utils
 import log from "../utils/logger";
 // services
-import { create_session, get_session } from "../service/session.service";
+import { create_session, get_session, update_session } from "../service/session.service";
 import { validate_password } from "../service/user.service";
 import { sign_jwt } from "../utils/jwt.utils";
 
@@ -48,3 +48,16 @@ export const get_user_session_handler = async (
   const session = await get_session({ user: user_id, valid: true });
   return response.send(session);
 };
+export const delete_user_session_handler = async (request: Request, response: Response) =>{
+    const session_id = response.locals.user.session;
+    // console.log(response.locals);
+    // return response.send("HELLLOOO DELETE SESSION HERE");
+
+    await update_session({_id:session_id}, {valid: false});
+
+    return response.send({
+        access_token: null,
+        refresh_token: null,
+    })
+}
+
