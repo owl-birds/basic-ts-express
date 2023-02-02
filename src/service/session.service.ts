@@ -20,7 +20,9 @@ export const get_session = async (query: FilterQuery<I_Session_Document>) => {
   //
   return await Session.find(query).lean(); // .lean() return plain object same as toJSON()
 };
-export const update_session = async (query: FilterQuery<I_Session_Document>, update: UpdateQuery<I_Session_Document>)=>{
+export const update_session = async (
+    query: FilterQuery<I_Session_Document>, 
+    update: UpdateQuery<I_Session_Document>)=>{
     return await Session.updateOne(query, update);
 };
 export const re_issue_access_token = async (refresh_token: string)=>{
@@ -28,15 +30,16 @@ export const re_issue_access_token = async (refresh_token: string)=>{
     if (!decoded || !get(decoded, "_id")){
         return false;
     }
-
-    const session = await Session.findById(get(decoded, "_id"));
+    // console.log("session: service", decoded);
+    const session = await Session.findById(get(decoded, "session"));
+    // console.log("session: service", session);
     if (!session || !session.valid){
         return false;
     }
     const user = await find_user({_id: session.user});
-
+    // OMIT THE PASSWORD
     if (!user) return false;
-
+    
     // Create new acces toke// create an access token
     const access_token = sign_jwt(
         { ...user, session: session._id },
