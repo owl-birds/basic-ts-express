@@ -16,6 +16,9 @@ export const create_user = async (
 };
 export const find_user = async (query: FilterQuery<I_User_Document>)=>{
     const user = await User.findOne(query);
+    if (!user){
+        return false;
+    }
     return omit(user.toJSON(), "password"); 
     // below not save
     return await User.findOne(query).lean();

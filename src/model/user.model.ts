@@ -57,13 +57,13 @@ User_Schema.pre("save", async function (next: HookNextFunction) {
 // called statistics".
 
 // methods
-User_Schema.methods.compare_password = async function (
+User_Schema.methods.compare_password =  function (
   candidate_password: string
 ): Promise<boolean> {
   const user = this as I_User_Document;
   return bcrypt
     .compare(candidate_password, user.password)
-    .catch((error: any) => false);
+    .catch((_error: any) => false);
 };
 
 // statics
