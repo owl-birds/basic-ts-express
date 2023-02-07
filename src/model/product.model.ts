@@ -1,14 +1,14 @@
 import { Schema, model, Document, Model } from "mongoose";
 import { I_User_Document } from "./user.model";
-import { customAlphabet } from "nanoid";
+//import { customAlphabet } from "nanoid";
 
 // setting up nanoid
-const nanoid = customAlphabet("abcdefghijklmnopqrstuvwxyz1234567890", 10);
+//const nanoid = customAlphabet("abcdefghijklmnopqrstuvwxyz1234567890", 10);
 
 export interface I_Product {
   //   user: Schema.Types.ObjectId; // or below
   user: I_User_Document["_id"];
-  product_id: string;
+  //product_id: string;
   title: string;
   description: string;
   price: number;
@@ -23,16 +23,16 @@ const Product_Schema = new Schema<I_Product_Document>(
   {
       // u can use mongoose generated id if u like 
       // // or maybe u can create mongoose midleware :: using Schema.pre()
-    product_id: {
-        type: String, 
-        required: true, 
-        unique: true, 
-        default: ()=>`product_${nanoid()}`
-    },
+    //product_id: {
+    //    type: String, 
+    //    required: true, 
+    //    unique: true, 
+    //    default: ()=>`product_${nanoid()}`
+    //},
     user: { type: Schema.Types.ObjectId, ref: "User", required: true },
     title: { type: String, required: true },
     description: { type: String, default: "new product"},
-    image: { type: String, default: ""},
+    image: { type: String, default: "no image"},
     price: { type: Number, required: true },
   },
   {

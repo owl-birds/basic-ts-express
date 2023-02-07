@@ -1,7 +1,7 @@
 import { DocumentDefinition, FilterQuery } from "mongoose";
 import Product, { I_Product_Document } from "../model/product.model";
 
-const create_product = async (
+export const create_product = async (
     input: DocumentDefinition<
         Omit<I_Product_Document, "createdAt" | "updatedAt">
     //I_Product_Document>
@@ -10,12 +10,13 @@ const create_product = async (
     try {
         const product = await Product.create(input);
         return product.toJSON();
-    } catch (_error) {
+    } catch (error: any) {
+        //console.log(error);
         throw new Error("error in creating product");
     }
 }
 
-const find_product = async (
+export const find_product = async (
     query: FilterQuery<I_Product_Document>,
     is_one: boolean = false
 )=>{
@@ -33,7 +34,7 @@ const find_product = async (
     }
 }
 
-const get_product_based_id = async (product_id: string)=>{
+export const get_product_based_id = async (product_id: string)=>{
     try {
        // const product = await Product.findById(product_id);
        const product = await Product.find({product_id: product_id}).lean();
@@ -43,7 +44,7 @@ const get_product_based_id = async (product_id: string)=>{
        throw new Error("error in finding product based on id");
     }
 }
-const get_products_based_user_id = async (user_id: string)=>{
+export const get_products_based_user_id = async (user_id: string)=>{
     try {
         const products = await Product.find({user: user_id}).lean();
         if (!products) return false;
@@ -52,14 +53,14 @@ const get_products_based_user_id = async (user_id: string)=>{
         throw new Error("error in finding product based on user id");
     }
 }
-const update_product = async ()=>{}
-const delete_product = async ()=>{}
+export const update_product = async ()=>{}
+export const delete_product = async ()=>{}
 
-export {
-    create_product, 
-    find_product,
-    get_product_based_id, 
-    get_products_based_user_id, 
-    update_product, 
-    delete_product
-}
+//export {
+//    create_product, 
+//    find_product,
+//    get_product_based_id, 
+//    get_products_based_user_id, 
+//    update_product, 
+//    delete_product
+//}
